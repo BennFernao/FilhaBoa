@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { buscarDadosJson } from "../../../../utils/fecths/post";
 
-export  async function GET(){
+export  async function GET(request){
 
     const req = await  request.json()
  
