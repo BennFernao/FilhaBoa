@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { buscarDadosJson } from "../../../../utils/fecths/post";
 
 export  async function GET(){
+
+    const req = await  request.json()
  
     const [resultados, options] = await buscarDadosJson({url :"http://localhost:3005/user/logout", dados: req, method:"GET", cookie: cookies().getAll()})
  

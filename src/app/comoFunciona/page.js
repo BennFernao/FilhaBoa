@@ -19,7 +19,6 @@ export default function Home() {
   // Definições gerais
 
 
-
   // Dados para o primeiro componente
 
   // Definições gerais
