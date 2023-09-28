@@ -6,6 +6,8 @@ import { Container, TextField, Button, Typography, FormGroup, Grid, Box } from '
 import Image from 'next/image';
 import {ThemeProvider,  createTheme} from '@mui/material';
 import { green, deepOrange, grey } from '@mui/material/colors';
+import { buscarDadosJson } from '../../../utils/fecths/post';
+
 
 const styles = {
   container: {
@@ -37,14 +39,50 @@ const theme = createTheme({
     }
   })
 
-const LoginPage = () => {
+  async function criarConta({email, senha,  nome, sobrenome}){
+
+    const body = {email, senha, nome, sobrenome}
+    const[ resultados, _] = await buscarDadosJson({url: "/criarConta/api", dados: body, method:"POST"})
+                            .then((res)=> {  
+                                                      
+                              return res
+                            })
+                            .catch((erro)=> ["erro", "erro ao fazer o login"])
+  
+  return resultados
+  
+  }
+  
+  function verificarOsDados({email, senha, nome, sobrenome}){
+  
+  
+    if(email && senha && nome && sobrenome){
+  
+      return ["sucesso"]
+  
+  
+    }else{
+      return ["erro", "preencha todos os campos"]
+    }
+  }
+
+const CriarContaPage = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [nome, setNome] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
 
-  const handleLogin = () => {
-    console.log('Login clicked');
-  };
+  const manipularCriacaoDaConta = async () => {
+
+    const resultadoDaValidacao = verificarOsDados({email, senha:password, nome, sobrenome})   
+    if(resultadoDaValidacao[0] == "erro") return resultadoDaValidacao
+    
+    const resultadoDaCriacaoDeConta = await criarConta({email, senha: password, nome, sobrenome})
+    return resultadoDaCriacaoDeConta
+};
+
+
 
   return (
 
@@ -54,29 +92,8 @@ const LoginPage = () => {
 
 
     <Grid container >
-        <Grid container item md={4} sx={{display:{xs:"none", md:"flex"}, bgcolor:grey[900]}}>
 
-            <Box  mt={20} p={4}>
-
-                <Container sx={{display:"flex",flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
-                    <Image  src="/logo.png" width={45} height={45}/>
-                </Container>
-                
-                <Typography variant="h4" color={grey[100]} mt={4} sx={{textAlign:"center"}} >
-                    Contamos contigo !
-                </Typography>
-
-                <Typography sx={{fontWeight:"700"}} mt={4} color={grey[400]}>
-                    Contamos contigo meu amigo/a, estamos fazendo as melhores coisas que estao ao nosso alcançe e efetivar o mundo de modo nunca antes visto
-                </Typography>
-
-
-            </Box>
-
-
-        </Grid>
-
-        <Grid container item xs={12}  md={8}>
+        <Grid container item xs={12}  md={12}>
             <Container sx={{...styles.container}}>
             <Typography variant="h4" gutterBottom sx={{mb:4}}>
                 Criar Conta
@@ -88,19 +105,20 @@ const LoginPage = () => {
                     <Box sx={{display:"flex", flexDirection:"column", gap:2, width:{md:"50%", xs:"100%"}}}>
                         
                         <TextField
-                        label="Email"
+                        label="Nome"
                         variant="outlined"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.value)}
                         fullWidth
                         />
+
                         <TextField
-                        label="Password"
+                        label="Sobrenome"
                         variant="outlined"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        type="text"
+                        value={sobrenome}
+                        onChange={(e) => setSobrenome(e.target.value)}
                         fullWidth
                         />
 
@@ -127,7 +145,19 @@ const LoginPage = () => {
                     </Box>
 
                </Box>
-                <Button variant="contained" color="primary" size='large' onClick={handleLogin}>
+                <Button variant="contained" color="primary" size='large' onClick={async ()=>{
+
+                    
+                    const resultado = await  manipularCriacaoDaConta()
+                    if(resultado[0] != "erro"){
+
+                      router.push("/")
+                      
+                    }
+
+                }
+                  
+                 }>
                 Criar Conta
                 </Button>
                 <Button variant="text" color="primary" href='/login'>
@@ -142,4 +172,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default CriarContaPage;

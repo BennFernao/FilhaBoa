@@ -1,13 +1,10 @@
-// import './globals.css'
-// import { Inter } from 'next/font/google'
-
-// const inter = Inter({ subsets: ['latin'] })
-
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-
+import Theme from './theme';
+import { BarraDeNavegacao } from '@/componentes/navbar/BarraDeNavegacao';
+import { ItensDeAutenticacao } from '@/componentes/navbar/subcomponentes/ItemDeAutenticacao';
 
 
 export const metadata = {
@@ -24,7 +21,12 @@ export default function RootLayout({ children }) {
     <html lang="pt-br">
       {// className={inter.className} para o body
       }
-      <body >{children}</body>
+      <body  >
+        <Theme>
+         
+          {children}
+        </Theme>
+      </body>
     </html>
  
   )

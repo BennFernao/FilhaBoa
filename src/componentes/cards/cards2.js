@@ -19,7 +19,7 @@ export default function BlogCard({titulo, autor, srcImagem}) {
         height="300"
         image={srcImagem}
       />
-      <CardContent sx={{backgroundColor: "black"}}>
+      <CardContent >
         <Box sx={{display:"flex",}}>
             <Typography variant='body1' sx={{my:1, fontWeight: "bold", color:grey[800]}} >
                 {autor} a 30 min

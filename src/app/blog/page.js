@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { BarraDeNavegacao } from "@/componentes/navbar/BarraDeNavegacao";
 import { Grid, Box, Typography, Divider, Button } from "@mui/material";
-import {  ThemeProvider, createTheme } from '@mui/material';
 import { green, deepOrange, grey } from '@mui/material/colors';
 import Image from 'next/image';
 
@@ -10,17 +9,7 @@ import { ScreenComDoisComponentes, PequenaDescricaoTextual, PequenaDescricaoText
 import { ScreenTituloMaisCards, ScreenTituloMaisCardsDois } from '@/componentes/screens/screenTituloMaisCards';
 
 import { Footer } from '@/componentes/footers/footer1';
-import HeaderUm from '@/componentes/headers/header1';
-
-const theme = createTheme({
-  palette:{
-      primary :{main: green[900]} ,
-      secondary:{main : deepOrange[900]},
-      white : {main: "#fff"},
-      black : {main : "#0D0D0D", contrastText :"#212121"},
-      subtitle : {main : grey[700]}  
-  }
-})
+import { ItensDeAutenticacao } from '@/componentes/navbar/subcomponentes/ItemDeAutenticacao';
 
 export default function Home() {
 
@@ -128,12 +117,13 @@ const ComponenteDoisScreenQuatro = ()=>(
 
 
 const itemsDadosDosPosts = {
- 
+  titulo : "Artigos Recentes",
+  textoLerMais : "Mais Artigos",
   dadosDosCards : [
     {
         autor: "Filha boa",
         titulo: "OS encargos que suportamos",
-        srcImagem : "/img4.jpg",
+        srcImagem : "/img5.jpg",
         
     },        {
         autor: "Filha boa",
@@ -143,7 +133,7 @@ const itemsDadosDosPosts = {
     }, {
         autor: "Filha boa",
         titulo: "OS encargos que suportamos",
-        srcImagem : "/img4.jpg",
+        srcImagem : "/img8.jpg",
         
     }
   ]
@@ -178,13 +168,10 @@ const questoesERespostas = [
   
 
   return (
-
-    <ThemeProvider theme={theme}>
-      <BarraDeNavegacao />
-      <HeaderUm {...dadosParaOHeader} />
-
-
-      <Grid container >
+     <Grid container >
+        <BarraDeNavegacao>
+            <ItensDeAutenticacao />
+        </BarraDeNavegacao>
 
         {// Quinto
         }
@@ -192,11 +179,6 @@ const questoesERespostas = [
         <Grid container item sx={{backgroundColor : "#f7f7f7"}}>  
             <ScreenTituloMaisCardsDois  {...itemsDadosDosPosts}/>
         </Grid>
-
-
- 
-
-
 
         <Grid container item px={definicoesGerais.paddingHorizontal} py={definicoesGerais.paddingVertical} sx={{ backgroundColor:"#000000"}}>
           <Footer />
@@ -206,12 +188,6 @@ const questoesERespostas = [
           
           
 
-        </Grid>
-
-
-    </ThemeProvider>
-
-
-
+     </Grid>
   )
 }

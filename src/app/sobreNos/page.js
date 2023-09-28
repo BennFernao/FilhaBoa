@@ -5,23 +5,15 @@ import { Grid, Box, Typography, Divider, Button } from "@mui/material";
 import {  ThemeProvider, createTheme } from '@mui/material';
 import { green, deepOrange, grey } from '@mui/material/colors';
 import Image from 'next/image';
+import { Imagem, ContainerParaDoisComponentes } from '../page';
 
 import { ScreenComDoisComponentes, PequenaDescricaoTextual, PequenaDescricaoTextualMenor } from '@/componentes/screens/screenComDoisComponentes';
 import { ScreenTituloMaisCards, ScreenTituloMaisCardsDois } from '@/componentes/screens/screenTituloMaisCards';
 import { Footer } from '@/componentes/footers/footer1';
-import HeaderUm from '@/componentes/headers/header1';
+import { ItensDeAutenticacao } from '@/componentes/navbar/subcomponentes/ItemDeAutenticacao';
 
-const theme = createTheme({
-  palette:{
-      primary :{main: green[900]} ,
-      secondary:{main : deepOrange[900]},
-      white : {main: "#fff"},
-      black : {main : "#0D0D0D", contrastText :"#212121"},
-      subtitle : {main : grey[700]}
 
-      
-  }
-})
+
 
 export default function Home() {
 
@@ -38,7 +30,7 @@ export default function Home() {
 
     titulo : "Há um tempo atrás começamos a impactar o mundo",
     descricao : "A importância do apadrinhamento vai além do vinho. Ao apadrinhar uma videira, você se torna um guardião de uma parte significativa da nossa história e cultura. Você está escrevendo seu próprio capítulo nesta história, contribuindo para o futuro do vinho e para a celebração do legado que ele carrega consigo",
-    subtitulo : "Junte-se a nós no apadrinhamento de videiras",
+    subtitulo : "Junte-se a nós ",
   }
 
   const componenteUmDoScreenUm = <PequenaDescricaoTextual {...itemsParaOComponenteUm} />
@@ -120,6 +112,10 @@ const dadosParaOHeader = {
 }
 
 
+const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm} /> 
+const Componente2DoGrid1 = <Imagem src={"/img8.jpg"} />
+
+
 
 
 
@@ -127,214 +123,41 @@ const dadosParaOHeader = {
 
   return (
 
-    <ThemeProvider theme={theme}>
-      <BarraDeNavegacao />
-      <HeaderUm  {...dadosParaOHeader}/>
 
-      <Grid container >
-        {// primeiro elemento
-        }
-        <ScreenComDoisComponentes ComponenteUm={componenteUmDoScreenUm} ComponenteDois={<ComponenteDoisScreenUm />}  {...definicoesGerais} primeiroElemento={true}/>
+      <Grid container  py={6}>
+        <BarraDeNavegacao>
+          <ItensDeAutenticacao />
+        </BarraDeNavegacao>
         {// Segundo elemento
         }
         <ScreenTituloMaisCards titulo={itensDoScreenTituloMaisCards.titulo} dadosDosCards={itensDoScreenTituloMaisCards.dadosDosCards}/>
 
-         {// Terceiro  elemento
+      {// primeiro elemento
+      }
+      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+
+      {// primeiro elemento
+      }
+      <ContainerParaDoisComponentes Componente1={Componente2DoGrid1} Componente2={Componente1DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+
+      {// primeiro elemento
+      }
+      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+
+
+
+
+      {
+        // Footer
         }
-
-        <ScreenComDoisComponentes ComponenteDois={componenteUmDoScreenTres} ComponenteUm={<ComponenteDoisScreenTres />}  {...definicoesGerais}/>
-
-        {// Quarto elemento
-        }
-
-        <Box px={definicoesGerais.paddingHorizontal}>
-          <Typography variant='h2' sx={{fontWeight:"bold", mb:10}}>Juntos podemos melhorar o mundo</Typography>
-        </Box>
-        <Grid container item xs={12} sx={{display:"flex", flexDirection:"row"}} px={definicoesGerais.paddingHorizontal}>
-            <Grid item xs={12} md={6} p={2}>
-                <ScreenComDoisComponentes ComponenteDois={componenteUmDoScreenQuatro} ComponenteUm={<ComponenteDoisScreenQuatro />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
-            </Grid>
-            <Grid item xs={12} md={6} p={2}>
-                <ScreenComDoisComponentes ComponenteDois={componenteUmDoScreenCinco} ComponenteUm={<ComponenteDoisScreenCinco />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
-            </Grid>
-        </Grid>
-
-        {
-          //Quarto
-        }
-
-
-
-        <Grid  container item px={definicoesGerais.paddingHorizontal} py={definicoesGerais.paddingVertical} sx={{ backgroundColor:"#000000", flexDirection:"column"}}>
-          <Grid item>
-
-            <Typography variant="h3" sx={{fontWeight:"bold", mb:8}} color="white.main">
-              Conheça os nossos planos 
-            </Typography>
-
-          </Grid>
-
-          <Grid container item >
-            <Grid xs={12} lg={4} p={2}>  
-              <Box sx={{width:"100%", height:600, backgroundColor: grey[900],boxSizing:"border-box", p:5}}>
-
-                <Typography color={grey[500]} sx={{fontWeight:700}} variant="body1">Planos Filha Boa</Typography>
-                <Typography color="white.main" variant="h5" sx={{fontWeight:"bold", my:2}}>Plano Básico</Typography>
-                
-
-                <Typography color={grey[500]} variant="body1">
-                É importante fornecer informações claras e transparentes sobre os detalhes do plano para garantir que o cliente esteja ciente do que está adquirindo. Aqui estão alguns dos dados mais importantes que alguém pode querer saber sobre um plano de pagamento 
-                </Typography>
-
-                <Typography color={grey[200]} variant='body1' my={2} >
-                  Apartir de 1$
-                </Typography>
-                <Typography color={grey[200]} variant='body1' my={2} sx={{textDecoration: "line-through"}} >
-                  Apartir de 1$
-                </Typography>
-
-
-                <Typography color={grey[200]} variant='body1' my={2}>
-                  Por 3 meses
-                </Typography>
-
-                <Typography color={grey[200]} variant='body1' my={2}>
-                  Cancelamento automático 
-                </Typography>
-
-
-
-                <Box sx={{width:"100%", display:"flex", flexDirection:"column", mt:8}}>
-
-                  <Button variant="contained"   sx={{position:"block"}}>
-                    Aderir
-                  </Button>
-
-                  <Button outlined="contained" color='white' sx={{mt:2}}>
-                    Saber mais
-                  </Button>
-
-                </Box>
-
-
-
-              </Box>
-            </Grid>
-
-            <Grid xs={12} lg={4} p={2}>  
-              <Box sx={{width:"100%", height:600, backgroundColor: grey[900],boxSizing:"border-box", p:5}}>
-
-  <Typography color={grey[500]} sx={{fontWeight:700}} variant="body1">Planos Filha Boa</Typography>
-  <Typography color="white.main" variant="h5" sx={{fontWeight:"bold", my:2}}>Plano Básico</Typography>
-
-
-  <Typography color={grey[500]} variant="body1">
-  É importante fornecer informações claras e transparentes sobre os detalhes do plano para garantir que o cliente esteja ciente do que está adquirindo. Aqui estão alguns dos dados mais importantes que alguém pode querer saber sobre um plano de pagamento 
-  </Typography>
-
-  <Typography color={grey[200]} variant='body1' my={2} >
-    Apartir de 1$
-  </Typography>
-  <Typography color={grey[200]} variant='body1' my={2} sx={{textDecoration: "line-through"}} >
-    Apartir de 1$
-  </Typography>
-
-
-  <Typography color={grey[200]} variant='body1' my={2}>
-    Por 3 meses
-  </Typography>
-
-  <Typography color={grey[200]} variant='body1' my={2}>
-    Cancelamento automático 
-  </Typography>
-
-
-
-  <Box sx={{width:"100%", display:"flex", flexDirection:"column", mt:8}}>
-
-    <Button variant="contained"   sx={{position:"block"}}>
-      Aderir
-    </Button>
-
-    <Button outlined="contained" color='white' sx={{mt:2}}>
-      Saber mais
-    </Button>
-
-  </Box>
-
-
-
-              </Box>
-            </Grid>
-
-            <Grid xs={12} lg={4} p={2}> 
-              <Box sx={{width:"100%", height:600, backgroundColor: grey[900],boxSizing:"border-box", p:5}}>
-
-              <Typography color={grey[500]} sx={{fontWeight:700}} variant="body1">Planos Filha Boa</Typography>
-              <Typography color="white.main" variant="h5" sx={{fontWeight:"bold", my:2}}>Plano Básico</Typography>
-
-
-              <Typography color={grey[500]} variant="body1">
-              É importante fornecer informações claras e transparentes sobre os detalhes do plano para garantir que o cliente esteja ciente do que está adquirindo. Aqui estão alguns dos dados mais importantes que alguém pode querer saber sobre um plano de pagamento 
-              </Typography>
-
-              <Typography color={grey[200]} variant='body1' my={2} >
-                Apartir de 1$
-              </Typography>
-              <Typography color={grey[200]} variant='body1' my={2} sx={{textDecoration: "line-through"}} >
-                Apartir de 1$
-              </Typography>
-
-
-              <Typography color={grey[200]} variant='body1' my={2}>
-                Por 3 meses
-              </Typography>
-
-              <Typography color={grey[200]} variant='body1' my={2}>
-                Cancelamento automático 
-              </Typography>
-
-
-
-              <Box sx={{width:"100%", display:"flex", flexDirection:"column", mt:8}}>
-
-                <Button variant="contained"   sx={{position:"block"}}>
-                  Aderir
-                </Button>
-
-                <Button outlined="contained" color='white' sx={{mt:2}}>
-                  Saber mais
-                </Button>
-
-              </Box>
-
-
-
-              </Box>
-            </Grid>
-
-
-          </Grid>
-
-        </Grid>
-
-
-
-
         <Grid container item px={definicoesGerais.paddingHorizontal} py={definicoesGerais.paddingVertical} sx={{ backgroundColor:"#000000"}}>
           <Footer />
           <Divider sx={{color: grey[100], backgroundColor: grey[500]}} />
         </Grid>
-
           
           
 
         </Grid>
-
-
-    </ThemeProvider>
-
-
 
   )
 }

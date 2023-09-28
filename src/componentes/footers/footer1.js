@@ -7,131 +7,54 @@ const { default: Link } = require("next/link")
 export function Footer(){
 
     const dadosDoFooter = [
-        {
-            item: "Produtos",
-            elementos: [
-                {
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },
-            ]
-        },
-        {
-            item: "Funcionamento",
-            elementos: [
-                {
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },
-            ]
-        },
+
         {
             item: "Links ",
             elementos: [
                 {
-                    titulo : "Mercadoria",
+                    titulo : "Home",
                     link: "/"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
+                    titulo : "Contacto-nos",
+                    link: "/contacto"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
+                    titulo : "Apadrinhar",
+                    link: "/apadrinhar"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
+                    titulo : "Como funciona",
+                    link: "/comoFunciona"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
+                    titulo : "Sobre Nós",
+                    link: "/sobreNos"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
+                    titulo : "Blog",
+                    link: "/blog"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
+                    titulo : "Login",
+                    link: "/Login"
                 },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },
+                    titulo : "Criar Conta",
+                    link: "/criarConta"
+                }
             ]
         },
         {
-            item: "Planos",
+            item: "Redes Sociais",
             elementos: [
                 {
-                    titulo : "Mercadoria",
+                    titulo : "Facebook",
                     link: "/"
                 },{
-                    titulo : "Mercadoria",
+                    titulo : "twitter",
                     link: "/"
                 },{
-                    titulo : "Mercadoria",
+                    titulo : "Instagram",
                     link: "/"
                 },{
-                    titulo : "Mercadoria",
+                    titulo : "Threads",
                     link: "/"
                 },{
-                    titulo : "Mercadoria",
+                    titulo : "Linkedin",
                     link: "/"
                 },{
                     titulo : "Mercadoria",
@@ -267,7 +190,7 @@ export function Footer(){
             <Grid container item xs={12} sx={{display: "flex", flexDirection:"row", justifyContent:"space-between", backgroundColor:"#000000"}}>
             {dadosDoFooter.map((dado, pos)=>(
                 <Box>
-                <Typography sx={{mb:4, color: grey[500], my:2, fontWeight:"bold" }}>{dado.item}</Typography> 
+                <Typography variant="h6" sx={{mb:4, color: grey[500], my:2, fontWeight:"bold" }}>{dado.item}</Typography> 
                 <Divider sx={{color: grey[100], backgroundColor: grey[500]}} />
                     <Box>
                         {dado.elementos.map((elemento, pos)=>(
