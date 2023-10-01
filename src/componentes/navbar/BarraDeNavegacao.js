@@ -82,13 +82,13 @@ export function BarraDeNavegacao({children}){
 
     return(
 
-    <Grid container   >  
+    <Box sx={{flexGrow: 1}}>  
 
-        <AppBar  sx={{bgcolor: "#000"}} >
+        <AppBar position= "sticky"  sx={{bgcolor: "#000"}} >
 
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
+                <Box sx={{ display: { xs: 'flex',  }, mr: 1 }} >
                     <Image  src="/logo.png" width={25} height={25}/>
                 </Box>
 
@@ -156,32 +156,7 @@ export function BarraDeNavegacao({children}){
 
                 </Box>
 
-
-
-                <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
-                    <Image  src="/logo.png" width={25} height={25}/>
-                </Box>
-
-                <Typography
-                    variant="h5"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{
-                    mr: 2,
-                    display: { xs: 'flex', md: 'none' },
-                    flexGrow: 1,
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    }}
-                >
-                    FilhaBoa
-                </Typography>
-
-                
+          
                 {
                     // Paginas para ecras maiores
                 }
@@ -202,7 +177,7 @@ export function BarraDeNavegacao({children}){
 
 
 
-                <Box sx={{ flexGrow: 0, display:{xs :"block", lg:"block"}, mx:6 }}>
+                <Box sx={{ flexGrow: 0, display:{xs :"none", lg:"block"}, mx:6 }}>
                     <Tooltip title="Mudar a lingua">
                     <IconButton onClick={handleOpenUserMenuLanguage} sx={{ p: 0}}>
                         <Avatar sx={{ bgcolor:grey[900] }}>
@@ -287,7 +262,7 @@ export function BarraDeNavegacao({children}){
             </Container>
         </AppBar>
 
-    </Grid>
+    </Box>
 
     )
 }

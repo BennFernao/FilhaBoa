@@ -1,7 +1,7 @@
 "use client"
 import * as React from 'react';
 import { green, deepOrange, grey } from '@mui/material/colors';
-import { Grid, Box, Typography, Divider, Button , TextField, Icon} from "@mui/material";
+import { Grid, Box, Typography, Divider, Button , TextField, Icon, useMediaQuery} from "@mui/material";
 
 import Image from 'next/image';
 
@@ -23,10 +23,14 @@ import { BarraDeNavegacao } from '@/componentes/navbar/BarraDeNavegacao';
 
 export default function App(){
 
+
+
+
   // Definições gerais
     const definicoesGerais = {
       paddingHorizontal : 5,
       paddingVertical : 15
+
     }
 
   // Elementos para o primeiro componente
@@ -41,6 +45,8 @@ export default function App(){
     aviso : "Ao continuares , você aceita a nossa politica e termos de privacidade",
     linkParaOAviso : "/politicaDePrivacidade"
   }
+
+  
   const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm} /> 
   const Componente2DoGrid1 = <Imagem src={"/img8.jpg"} />
 
@@ -202,11 +208,11 @@ const questoesERespostas = [
 
       {// primeiro elemento
       }
-      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2, diretion:  "row" }} />
 
       {// primeiro elemento
       }
-      <ContainerParaDoisComponentes Componente1={Componente2DoGrid2} Componente2={Componente1DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid2} opcoes={{bg:"#0D0D0D", py:2, diretion: "row-reverse"}} />
 
       {
         //Segundo elemento
@@ -301,7 +307,7 @@ export function Imagem({src}){
 
   return(
     <Box  mt={10}  sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-      <Image width={680} height={640}  src={src} style={{objectFit:"cover", borderRadius:3}} />
+      <Image width={680} height={640}  src={src} style={{objectFit:"cover", borderRadius:3, maxWidth:"100%"}} />
     </Box> 
   )
 }
@@ -309,20 +315,23 @@ export function Imagem({src}){
 
 export function ContainerParaDoisComponentes({Componente1, Componente2, opcoes}){
 
+  
   return(
 
-    <Grid container item xs={12} sx={{ display:"flex", flexDirection:"row", flexWrap: "wrap", justifyContent: "space-between", bgcolor: opcoes.bg ? opcoes.bg : "inherit", py: opcoes.py ? opcoes.py : 2}} >
+    <Grid container item xs={12} sx={{ display:"flex", flexDirection: opcoes.diretion, flexWrap: "wrap", justifyContent: "space-between", bgcolor: opcoes.bg ? opcoes.bg : "inherit", py: opcoes.py ? opcoes.py : 2}} >
 
-          <Grid item xs ={12} md={6} >
-             {Componente1}           
-          </Grid>
+            <Grid container item xs={12} md={6} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}  >
+              {Componente1}   
+            </Grid>
 
-          <Grid container item xs={12} md={6} sx={{display:"flex", justifyContent:"center", alignItems:"center"}}  >
-            {Componente2}   
-          </Grid>
+            <Grid item xs ={12} md={6} >
+              {Componente2}           
+            </Grid>      
     </Grid>
   )
 }
+
+
 
 function Container2(){
 
