@@ -1,5 +1,5 @@
 import { ArrowForward, NextPlan } from "@mui/icons-material";
-import { grey } from "@mui/material/colors";
+import { green, grey } from "@mui/material/colors";
 import Image from "next/image";
 
 const { Grid,  Typography, Box, Button, Stack } = require("@mui/material");
@@ -39,14 +39,14 @@ export function PequenaDescricaoTextual({titulo, subtitulo,descricao ,textoParaA
                     <Image width={25} height={25} src="/waitIcon.svg" alt="imagem de espera" />
                 </div>
                 
-                <Box sx={{display:"flex", flexDirection:"row", mt:1}}>
-                    <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:grey[300]}}>
+                <Box sx={{display:"flex", flexDirection:"row", flexWrap: "wrap", mt:1}}>
+                    <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:grey[300], mx:2}}>
                         Torne se um 
                     </Typography>
-
-                    <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold", color:"#54AD5B",my:0,  mx:2}}>
+                    <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:"#54AD5B"}}>
                         Padrinho 
                     </Typography>
+
                 </Box>
 
             </Box>
@@ -71,14 +71,14 @@ export function PequenaDescricaoTextual({titulo, subtitulo,descricao ,textoParaA
                         <Image width={25} height={25} src="/waitIcon.svg" alt="imagem de espera" />
                     </div>
                     
-                    <Box sx={{display:"flex", flexDirection:"row", mt:1}}>
+                    <Box sx={{ mt:1}}>
                         <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:grey[300]}}>
                             Torne se um 
                         </Typography>
-
-                        <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold", color:"#54AD5B",my:0,  mx:2}}>
+                        <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold", color:"#54AD5B",my:0}}>
                             Padrinho 
                         </Typography>
+
                     </Box>
 
                 </Box>

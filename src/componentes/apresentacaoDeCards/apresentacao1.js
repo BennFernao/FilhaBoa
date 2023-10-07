@@ -8,7 +8,7 @@ export default function PlanoDeApadrinhamento(){
     return(
 
         <Grid xs={12} lg={4} p={2}>  
-        <Box sx={{width:"100%", height:600, backgroundColor: grey[900],boxSizing:"border-box", p:5}}>
+        <Box sx={{width:"100%",  backgroundColor: grey[900],boxSizing:"border-box", p:5}}>
 
           <Typography color={grey[500]} sx={{fontWeight:700}} variant="body1">Planos Filha Boa</Typography>
           <Typography color="white.main" variant="h5" sx={{fontWeight:"bold", my:2}}>Plano Básico</Typography>

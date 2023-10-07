@@ -46,7 +46,7 @@ export default function App(){
     linkParaOAviso : "/politicaDePrivacidade"
   }
 
-  
+
   const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm} /> 
   const Componente2DoGrid1 = <Imagem src={"/img8.jpg"} />
 
@@ -256,7 +256,6 @@ const questoesERespostas = [
               <PlanoDeApadrinhamento />
               <PlanoDeApadrinhamento />
               <PlanoDeApadrinhamento />
-
           </Grid>
 
 
@@ -306,9 +305,13 @@ const questoesERespostas = [
 export function Imagem({src}){
 
   return(
-    <Box  mt={10}  sx={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+    <>
+    <Box  mt={10}  sx={{display:"flex", justifyContent:"center", alignItems:"center", padding:{xs: 4, lg:0} }}>
       <Image width={680} height={640}  src={src} style={{objectFit:"cover", borderRadius:3, maxWidth:"100%"}} />
     </Box> 
+
+
+    </>
   )
 }
 

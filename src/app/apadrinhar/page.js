@@ -1,5 +1,5 @@
 "use client"
-import { BarraDeNavegacao } from "@/componentes/navbar/BarraDeNavegacao";
+
 
 import {  Typography,  Grid, Box, Button , Checkbox,MenuItem,  Modal, FormControl, InputLabel, Select, ImageList} from '@mui/material';
 import { green, deepOrange, grey, red } from '@mui/material/colors';
@@ -8,14 +8,190 @@ import * as React from "react"
 import { Provider, useDispatch, useSelector,  } from "react-redux";
 import { UseSelector } from "react-redux/es/hooks/useSelector";
 import Store from "../../../redux/store"
-import { ItensDeAutenticacao } from "@/componentes/navbar/subcomponentes/ItemDeAutenticacao";
+import {ItensDeAutenticacao} from "@/componentes/navbar/subcomponentes/ItemDeAutenticacao";
 
 import {degrees, PDFDocument, rgb, StandardFonts} from "pdf-lib"
 
-
-
 import {deletarVideiraSelecionada, inserirPlanos, inserirVideiraSelecionada, alterarSessaoAtiva, mapearUmaSessao, inserirEstadosDeVideirasDeUmaSecao} from "../../../redux/reducer"
 import { buscarDadosJson } from "../../../utils/fecths/post";
+import {BarraDeNavegacao} from '@/componentes/navbar/BarraDeNavegacao';
+
+
+function AppDois(){
+
+    const [modalDeApadrinhamentoAberto, setModalDeApadrinhamentoAberto] = React.useState(false)
+    const [modalDeVisualizarVideiraAberto, setModalDeVisualizarVideira] = React.useState(false)
+    const [dadosAdicionaisDaVideiraPatrocinada , setdadosAdicionaisDaVideiraPatrocinada] = React.useState(null)
+    const [dadosBasicosDaVideira, setDadosBasicosDaVideira] = React.useState({posicao: "", secao : "", estado: ""})
+    
+
+    const dispacth = useDispatch()
+    const todosDadosDasSessoes = useSelector((state)=> state.sessoes)
+    const {sessaoAtivada, estadosDasVideirasDasSessoes, videirasSelecionadas } = todosDadosDasSessoes
+    const letras = [  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    
+    const itemsDoMapa = letras.concat(estadosDasVideirasDasSessoes[sessaoAtivada- 1])
+    
+
+    function manipularAtivacaoDeUmaSessao({secao}){
+
+        dispacth(alterarSessaoAtiva({sessaoAtivada : secao }))
+
+        buscarDadosJson({url: "/apadrinhar/vinhas/api", method: "POST", dados:{ secao}}).then((res)=> {
+
+            const [resultados, options] = res
+        
+                if(resultados[0] != "erro"){
+
+                        dispacth(inserirEstadosDeVideirasDeUmaSecao({estadosDasVideiras: resultados}))                  
+                }else{
+    
+                    console.log("erro")
+                }
+            }).catch((erro)=>{
+                console.log("erro", erro)    
+        })
+        }
+    
+    function manipularAberturaDoModalApadrinhar(){
+
+            setModalDeApadrinhamentoAberto(true)
+    
+    }
+
+    async function manipularVisualizacaoDeDadosDaVideira({posicao, secao, estado}){
+
+        setModalDeVisualizarVideira(true)
+        setDadosBasicosDaVideira({posicao, secao, estado})
+        
+
+        if(estado){
+
+            const [resposta, options] = await buscarDadosJson({url: "/apadrinhar/vinhas/videiraPatrocinada/api", method:"POST", dados:{posicao, secao}})
+            const nomeCompleto = resposta[0].nome + " " + resposta[0].sobrenome
+            const {dataInicio, dataFinal} = resposta[1]
+
+            const dadosDaVideira = {nomeCompleto, dataInicio, dataFinal}
+            setdadosAdicionaisDaVideiraPatrocinada((_)=> dadosDaVideira)
+            
+            
+        }else{
+
+            setdadosAdicionaisDaVideiraPatrocinada(null)
+        }
+
+    }
+
+
+
+    React.useEffect(()=>{
+    
+            manipularAtivacaoDeUmaSessao({secao: 1})
+    }, [])
+
+    
+
+    return (
+    <Grid container maxWidth="100%">
+
+
+        <BarraDeNavegacao>
+            <ItensDeAutenticacao />
+        </BarraDeNavegacao>
+
+        <Grid container item xs={12}  sx={{display:"flex", flexDirection:"row"}} >
+
+            <Grid container item md={2}  sx={{display:{xs:"none", md:"flex"}, flexDirection:"column", pt:15,bgcolor: grey[200], height:"100vh", justifyContent:"start", alignItems:"center"}} >
+                    {estadosDasVideirasDasSessoes.map((sessao, pos)=>(
+                        <Box key={pos}>   
+                            <Button variant={sessaoAtivada ==  pos + 1 ? "contained" : "text"} sx={{color:"black", my:1, color:"#000"}} onClick={()=>{
+                                
+                                
+                                manipularAtivacaoDeUmaSessao({secao: pos + 1})
+                                                           
+                                }}>Sessão {pos + 1 }</Button>
+
+                        </Box>
+                    ))}
+            </Grid>
+
+
+            <Grid container item md={10} sx={{pt:15, display:"flex" , flexDirection:"column"}}>
+
+                <Grid mb={3} container item sx={{justifyContent:"flex-end"}}>
+                
+                    <Button variant="contained" disabled = {(videirasSelecionadas.length == 0)} onClick={manipularAberturaDoModalApadrinhar}>Apadrinhar ({videirasSelecionadas.length})</Button>
+                </Grid>
+
+                <Grid container item sx={{display:"flex", flexDirection:"row", flexWrap:"wrap", width:"100%"}}>  
+
+                    <ImageList cols={26} rowHeight={40} sx={{width:"100%", height:"100%"}}>
+
+                        {itemsDoMapa.map((elemento, pos)=>{
+
+                            if(typeof elemento == "string"){
+                                return <Typography variant="body1" textAlign="center" key={pos}>{elemento}</Typography>
+
+
+                            }else{
+
+                                const itemSelecionado = videirasSelecionadas.find((item=> item.pos == elemento.posicao && item.secao == sessaoAtivada)) ? true : false
+                                
+                                return( 
+                                
+                                    <Box sx={{position:"relative", width: 42, height:40}} key={pos} > 
+
+                                        <Image width={40} height={40} src="/img4.jpg" alt="exemplo de uma videira" onClick={()=>{manipularVisualizacaoDeDadosDaVideira({posicao:elemento.posicao, secao: elemento.secao, estado: elemento.estaPatrocinado})}} />
+
+                                        <div style={{width:"10px", height:"10px", position: "absolute", bottom: 0, right:0, backgroundColor:elemento.estaPatrocinado ? "red" : "green", borderRadius: "10px" }} >
+                                            
+                                        </div>
+                                        
+                                        <input type="checkbox" style={{position: "absolute", top: 0, right:0 }}  checked={itemSelecionado}   onChange={(e)=>{ 
+
+
+                                        if(e.target.checked){
+
+                                            dispacth(inserirVideiraSelecionada({videiraSelecionada: {pos: elemento.posicao, secao: elemento.secao}}))
+                                            
+                                        }else{
+                                            
+                                            dispacth(deletarVideiraSelecionada({videiraAExcluir: {pos: elemento.posicao, secao: elemento.secao}}))
+                                        }
+                                    }}
+                                            
+                                    />
+                                    </Box>
+                                )
+                        }
+                            })}
+
+                    </ImageList>
+                    
+                </Grid>
+            </Grid>
+
+        </Grid>
+
+        <ModalAdadrinhar modalDeApadrinhamentoAberto={modalDeApadrinhamentoAberto} setModalDeApadrinhamentoAberto={setModalDeApadrinhamentoAberto} />
+        <ModalVisualizarDadosDaVideira modalDeVisualizarVideiraAberto={modalDeVisualizarVideiraAberto} setModalDeVisualizarVideira={setModalDeVisualizarVideira} dadosBasicosDaVideira={dadosBasicosDaVideira} dadosVideiraPatrocinada={dadosAdicionaisDaVideiraPatrocinada} />
+
+   </Grid>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function  App(){
@@ -31,6 +207,8 @@ function  App(){
 
     const letras = [  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     const itemsDoMapa = letras.concat(estadosDasVideirasDasSessoes[sessaoAtivada- 1])
+
+ 
 
     const dispacth = useDispatch()
 
@@ -48,17 +226,18 @@ function  App(){
         buscarDadosJson({url: "/apadrinhar/vinhas/api", method: "POST", dados:{ secao}}).then((res)=> {
 
             const [resultados, options] = res
+        
           
-    
                 if(resultados[0] != "erro"){
 
                         dispacth(inserirEstadosDeVideirasDeUmaSecao({estadosDasVideiras: resultados}))
+                        
                 }else{
     
                     console.log("erro")
                 }
             }).catch((erro)=>{
-                console.log(erro)    
+                console.log("erro", erro)    
             })
     }
 
@@ -94,7 +273,7 @@ function  App(){
    
     return(
 
-            <Grid container item xs={12}  sx={{display:"flex", flexDirection:"row", gap:2}} >
+            <Grid container item xs={12}  sx={{display:"flex", flexDirection:"row"}} >
                 <BarraDeNavegacao>
                     <ItensDeAutenticacao />
                 </BarraDeNavegacao>
@@ -113,10 +292,9 @@ function  App(){
                     ))}
                 </Grid>
 
-                <Grid container item md={9} sx={{pt:15, display:"flex" , flexDirection:"column"}}>
+                <Grid container item md={10} sx={{pt:15, display:"flex" , flexDirection:"column"}}>
 
-                    <Grid mb={3} container item sx={{justifyContent:"flex-end"}}>
-                       
+                    <Grid mb={3} container item sx={{justifyContent:"flex-end"}}>  
                         <Button variant="contained" disabled = {(videirasSelecionadas.length == 0)} onClick={manipularAberturaDoModalApadrinhar}>Apadrinhar ({videirasSelecionadas.length})</Button>
                     </Grid>
 
@@ -180,7 +358,7 @@ export default function Apadrinhar(){
     return(
 
         <Provider store={Store}>
-            <App />
+            <AppDois />
         </Provider>
 
     )

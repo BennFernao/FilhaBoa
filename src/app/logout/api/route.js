@@ -6,7 +6,7 @@ export  async function GET(request){
 
     const req = await  request.json()
  
-    const [resultados, options] = await buscarDadosJson({url :"http://localhost:3005/user/logout", dados: req, method:"GET", cookie: cookies().getAll()})
+    const [resultados, options] = await buscarDadosJson({url :process.env.apiurl+""+"/user/logout", dados: req, method:"GET", cookie: cookies().getAll()})
  
 
     return new Response(JSON.stringify(resultados), {

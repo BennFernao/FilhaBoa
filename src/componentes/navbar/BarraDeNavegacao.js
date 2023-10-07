@@ -47,7 +47,7 @@ const linguas = [
     srcImagemRepresentativa : "/english.png"
 }];
 
-export function BarraDeNavegacao({children}){
+export  function BarraDeNavegacao({children}){
 
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -84,38 +84,12 @@ export function BarraDeNavegacao({children}){
 
     <Box sx={{flexGrow: 1}}>  
 
-        <AppBar position= "sticky"  sx={{bgcolor: "#000"}} >
+        <AppBar  sx={{bgcolor: "#000", position:{xs:"static", md:"fixed"}}} >
 
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                <Box sx={{ display: { xs: 'flex',  }, mr: 1 }} >
-                    <Image  src="/logo.png" width={25} height={25}/>
-                </Box>
-
-                <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex' },
-                    fontWeight: 600,
-                    letterSpacing: '.1rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    marginRight: 10
-                    }}
-                >
-                    Filha Boa
-                </Typography>
-
-
-                {
-                    // opçoes de paginas para dispositivos pequenos
-                }
-
-                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    
+                <Box sx={{  display: { xs: 'flex', md: 'none' } }}>
                     <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -148,13 +122,41 @@ export function BarraDeNavegacao({children}){
                     >
                     {pages.map((page, pos) => (
                         <MenuItem key={pos} onClick={handleCloseNavMenu}  >
-                            <Button textAlign="center"  href={page.link}>{page.nome} </Button>
+                            <Button sx={{textAlign:"center"}}  href={page.link}>{page.nome} </Button>
                         </MenuItem>
                     ))
                     }
                     </Menu>
 
                 </Box>
+
+                <Box sx={{ display: { xs: 'flex',  }, mr: 1, flexGrow: {xs: 1, md:0} }} >
+                    <Image  src="/logo.png" alt="logotipo da filha boa" width={30} height={30}/>
+                </Box>
+
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/"
+                    sx={{
+                    mr: 2,
+                    display: { xs: 'none', md: 'flex' },
+                    fontWeight: 600,
+                    letterSpacing: '.1rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                    marginRight: 10
+                    }}
+                >
+                    Filha Boa
+                </Typography>
+
+
+                {
+                    // opçoes de paginas para dispositivos pequenos
+                }
+
 
           
                 {
@@ -207,7 +209,7 @@ export function BarraDeNavegacao({children}){
                     onClose={handleCloseUserMenuLanguage}
                     >
                     {linguas.map((lingua, pos) => (
-                        <MenuItem key={lingua} onClick={handleCloseUserMenuLanguage}  >
+                        <MenuItem key={pos} onClick={handleCloseUserMenuLanguage}  >
 
                             <Image src={lingua.srcImagemRepresentativa}  width={20} height={20} alt={lingua.nome}/>
                             <Button  href={lingua.link}>{lingua.nome}</Button>

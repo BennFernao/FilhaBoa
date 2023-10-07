@@ -1,6 +1,6 @@
 
 
-export async  function buscarDadosJson({url, method, dados = {}, cookie = null}){
+export  async  function buscarDadosJson({url, method, dados = {}, cookie = null}){
 
     
     
@@ -18,7 +18,6 @@ export async  function buscarDadosJson({url, method, dados = {}, cookie = null})
 
         ,
         body : method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD"  ? undefined :   JSON.stringify(dados),
-        credentials: "include",
         cache: "no-cache"
         
 

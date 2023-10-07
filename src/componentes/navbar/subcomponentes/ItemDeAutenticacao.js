@@ -1,27 +1,54 @@
-const { EntradaParaAuntenticacao, AvatarDoCliente } = require("./EntradasAutenticacao")
+"use client"
+import EntradaParaAuntenticacao from "./EntradasAutenticacao"
+import AvatarDoCliente from "./avatarDoCliente"
 import { buscarDadosJson } from "../../../../utils/fecths/post"
+import { Typography } from "@mui/material"
+import { useState, useEffect } from "react"
 
 
-export async  function ItensDeAutenticacao(){
+export   function ItensDeAutenticacao(){
 
-   
-    const buscarDadosDoTesteDeNavegacao = { funcao : buscarDadosJson, argumentos: {url: "http://localhost:3005/testeAutorizacao", method:"GET",  dados: {}} }
+  const [resultados, setResultados] = useState([null, []])
+
+
+
+  useEffect(()=>{
+
+    (async ()=>{
+
+       await buscarDadosJson({url:"https://filhaboa1-5fnu.vercel.app/testeAutorizacao", dados:{}, method:"GET" })
+      .then((resultados)=> {
+
+        const [dados, options]  = resultados
+        setResultados(resultados)
+        
+      })
   
-    const [resultados, _] = await buscarDadosDoTesteDeNavegacao.funcao(buscarDadosDoTesteDeNavegacao.argumentos)
-                                                                        .then((resultados)=> resultados)
-                                                                        .catch((erro)=>["erro", "erro ao buscar dados", erro])
-  
-   
+     .catch((erro)=>["erro", "erro ao buscar dados", erro])
 
+    })()
+
+
+  }, [])
+
+     
+                                                          
       if(!resultados[1].nome){
   
           return(
-            <EntradaParaAuntenticacao />
+
+          
+              <EntradaParaAuntenticacao />
+          
           )
       }else{
   
           return(   
-            <AvatarDoCliente nome={resultados[1].nome} />       
+            
+          
+              <Avatar nome={resultados[1].nome}/>
+         
+                  
           )
       }
   }

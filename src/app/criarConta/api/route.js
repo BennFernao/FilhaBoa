@@ -7,7 +7,7 @@ export  async function POST(request){
     const req = await  request.json()
 
             
-    const [resultados, options] = await buscarDadosJson({url :"http://localhost:3005/user/addUser", dados: req, method:"POST"})
+    const [resultados, options] = await buscarDadosJson({url :process.env.apiurl+""+"/user/addUser", dados: req, method:"POST"})
 
 
     return new Response(JSON.stringify(resultados), {

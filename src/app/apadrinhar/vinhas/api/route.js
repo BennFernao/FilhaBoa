@@ -5,8 +5,7 @@ export async  function POST(request){
 
     const {secao} = await request.json()
  
-    const [resposta, options] = await buscarDadosJson({url: "http://localhost:3005/vinha/lerEstadoDasVinhasPorSecao", method: "POST", dados :{secao }})
-    
+    const [resposta, options] = await buscarDadosJson({url:process.env.apiurl+""+"/vinha/lerEstadoDasVinhasPorSecao", method: "POST", dados :{secao }})
+    console.log(resposta)
     return new Response(JSON.stringify(resposta), {})
-
 }
