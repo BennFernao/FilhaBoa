@@ -38,7 +38,7 @@ const itemsParaOComponenteUm = {
   aviso : "Ao continuares , você aceita a nossa politica e termos de privacidade",
   linkParaOAviso : "/politicaDePrivacidade"
 }
-const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm} /> 
+const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm}  comEfeito={false}/> 
 const Componente2DoGrid1 = <Imagem src={"/img21.jpg"} />
 
     // Dados para o Segundo componente
@@ -96,7 +96,7 @@ const itemsParaOComponenteQuinto ={
 const ComponenteUmDoScreenQuatro = ({titulo, subtitulo,descricao, textoParaAcaoUm, linkParaAcao})=>{
   return(
 
-    <Box pt={2} pl={2}>
+    <Box >
 
         <Typography variant="body1" sx={{mt:2,fontWeight:"bold", color:grey[700]}}>
             {subtitulo}
@@ -153,13 +153,12 @@ const ComponenteDoisScreenQuatro = ()=>(
        </BarraDeNavegacao>
       {// primeiro elemento
       }
-      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0d0d0d", py :2}} />
 
 
       {// primeiro elemento
       }
-      <ContainerParaDoisComponentes Componente1={Componente2DoGrid1} Componente2={Componente1DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
-
+      <ContainerParaDoisComponentes Componente1={Componente2DoGrid1} Componente2={Componente1DoGrid1} opcoes={{bg:"#0d0d0d", py:2}} />
 
 
         {// Quarto elemento

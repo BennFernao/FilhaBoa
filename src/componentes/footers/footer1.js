@@ -56,22 +56,7 @@ export function Footer(){
                 },{
                     titulo : "Linkedin",
                     link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },
+                }
             ]
         },
         {
@@ -114,36 +99,12 @@ export function Footer(){
             item: "Regiões",
             elementos: [
                 {
-                    titulo : "Mercadoria",
+                    titulo : "Portugal, Lisboa",
                     link: "/"
                 },{
-                    titulo : "Mercadoria",
+                    titulo : "Angola, Luanda",
                     link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },{
-                    titulo : "Mercadoria",
-                    link: "/"
-                },
+                }
             ]
         },
         {

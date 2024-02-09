@@ -12,7 +12,7 @@ import {ItensDeAutenticacao} from "@/componentes/navbar/subcomponentes/ItemDeAut
 
 import {degrees, PDFDocument, rgb, StandardFonts} from "pdf-lib"
 
-import {deletarVideiraSelecionada, inserirPlanos, inserirVideiraSelecionada, alterarSessaoAtiva, mapearUmaSessao, inserirEstadosDeVideirasDeUmaSecao} from "../../../redux/reducer"
+import {deletarVideiraSelecionada, inserirPlanos, inserirVideiraSelecionada, alterarSessaoAtiva, mapearUmaSessao, inserirEstadosDeVideirasDeUmaSecao, definirPlanoDaVideiraSelecionada} from "../../../redux/reducer"
 import { buscarDadosJson } from "../../../utils/fecths/post";
 import {BarraDeNavegacao} from '@/componentes/navbar/BarraDeNavegacao';
 
@@ -370,11 +370,22 @@ function ModalAdadrinhar({modalDeApadrinhamentoAberto, setModalDeApadrinhamentoA
 
 
     const videirasSelecionadas = useSelector((state)=> state.sessoes.videirasSelecionadas)
+    const dispacth = useDispatch()
     
 
     function manipularFechamento(){
         setModalDeApadrinhamentoAberto(false)
     }
+
+    function definirPlanosPadroes(){
+
+        videirasSelecionadas.forEach((element, pos)=> { 
+
+            dispacth(definirPlanoDaVideiraSelecionada({posicaoDaVideira : pos , idPlanoSelecionado: 1 }))
+        })
+    }
+
+    definirPlanosPadroes()
 
     const style = {
         position: 'absolute',
@@ -398,22 +409,18 @@ function ModalAdadrinhar({modalDeApadrinhamentoAberto, setModalDeApadrinhamentoA
         <Modal
             open={modalDeApadrinhamentoAberto}
             onClose={manipularFechamento}
-
         >
 
-            <Box sx={{...style, width: 400, height: 500}}>                   
+            <Box sx={{...style, width: 400, height: 500, overflowY: "scroll"}}>                   
                     <Typography variant="h6" color="black.main" sx={{textAlign:"center", mb:4}}>
                         Apadrinhar as videiras selecionadas
                     </Typography>
 
                     {videirasSelecionadas.map((item, pos)=>(
-
-                        <ItemSelecionado item={item} key={pos}/>
-
-
+                        <ItemSelecionado item={item} key={pos} pos={pos} />
                     ))}
 
-                    <Button variant="contained" fullWidth  onClick={manipularFechamento}>
+                    <Button variant="contained" fullWidth sx={{marginTop: 5}}  onClick={manipularFechamento}>
                         Finalizar
                     </Button>
             </Box>
@@ -436,13 +443,12 @@ export function ModalCertificado({modalDeCertificadoAberto, setModalDeCertificad
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: "auto",
+        height: "auto",
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
-        pt: 2,
-        px: 4,
-        pb: 3,
+
       };
 
 
@@ -452,15 +458,13 @@ export function ModalCertificado({modalDeCertificadoAberto, setModalDeCertificad
         <Modal
             open={modalDeCertificadoAberto}
             onClose={manipularFechamento}
+            sx={{borderRadius: 10}}
         >
 
-            <Box sx={{...style, width: 600, height: 300}}>                   
+            <Box sx={{...style, overflow: "clip", borderRadius:5}}>                   
 
-                    <Typography>
-                       {nome}
-                    </Typography>
 
-                    <Box sx={{width:"100%", height:"100%"}}>
+                    <Box sx={{width:590, height:470}}>
 
                         <iframe id="mypdf">
                         </iframe>
@@ -567,11 +571,16 @@ function ModalVisualizarDadosDaVideira({modalDeVisualizarVideiraAberto, setModal
     )
 }
 
-function ItemSelecionado({item}){
+function ItemSelecionado({item, pos}){
 
-    const [idPlanoSelecionado, setIdPlanoSelecionado] = React.useState(0)
-    function manipularPlanoSelecionado (e){
+    const [idPlanoSelecionado, setIdPlanoSelecionado] = React.useState(1)
+    const dispacth = useDispatch()
 
+    function manipularPlanoSelecionado (e, posicaoDaVideira){
+
+
+        dispacth(definirPlanoDaVideiraSelecionada({posicaoDaVideira, idPlanoSelecionado: e.target.value}))
+        
         const idPlanoSelecionado = e.target.value
         setIdPlanoSelecionado(idPlanoSelecionado)
 
@@ -580,10 +589,11 @@ function ItemSelecionado({item}){
 
     return(
 
-    <Box >
-        <Typography variant="body1">
-            {item.nome}, {item.pos}
+    <Box sx={{my:3}} >
+        <Typography variant="body1" sx={{my:2}}>
+           Selecione um plano para a  Seção  {item.secao}, Videira  {item.pos}
         </Typography>
+
         <FormControl fullWidth>
             <InputLabel id="labelDoSelecionadorDePlanos">Plano</InputLabel>
             <Select
@@ -591,7 +601,7 @@ function ItemSelecionado({item}){
             labelId="labelDoSelecionadorDePlanos"
             label="Plano"
             value={idPlanoSelecionado}
-            onChange={manipularPlanoSelecionado}
+            onChange={(e)=>{manipularPlanoSelecionado(e,pos )}}
             sx={{color: "#000"}}
             
             >

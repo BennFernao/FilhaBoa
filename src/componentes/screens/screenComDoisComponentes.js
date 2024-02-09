@@ -1,6 +1,7 @@
 import { ArrowForward, NextPlan } from "@mui/icons-material";
 import { green, grey } from "@mui/material/colors";
 import Image from "next/image";
+import { ReactTyped} from "react-typed";
 
 const { Grid,  Typography, Box, Button, Stack } = require("@mui/material");
 
@@ -21,69 +22,38 @@ export function ScreenComDoisComponentes({ComponenteUm, ComponenteDois, paddingH
 
 
 
-
-
-
-
-export function PequenaDescricaoTextual({titulo, subtitulo,descricao ,textoParaAcaoUm,  aviso , linkParaOAviso, linkParaAcao}){
+export function PequenaDescricaoTextual({titulo, subtitulo,descricao ,textoParaAcaoUm,  aviso , linkParaOAviso, linkParaAcao, comEfeito = true}){
 
     return ( 
         <>  
-        <Box px={5} mt={30} display={{xs: "none", md:"block"}} >
-
-            <Box>     
-                <div style={{backgroundColor: "#000", width: "250px", padding:"10px", borderRadius:"10px", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
-                    <Typography variant="body1" sx={{fontWeight:"bold", color:grey[100], mx:1}}>
-                        {subtitulo}
-                    </Typography>
-                    <Image width={25} height={25} src="/waitIcon.svg" alt="imagem de espera" />
-                </div>
-                
-                <Box sx={{display:"flex", flexDirection:"row", flexWrap: "wrap", mt:1}}>
-                    <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:grey[300], mx:2}}>
-                        Torne se um 
-                    </Typography>
-                    <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:"#54AD5B"}}>
-                        Padrinho 
-                    </Typography>
-
-                </Box>
-
-            </Box>
-
-            <Typography variant="body1" sx={{mt:4, color:grey[400]}}>
-                {descricao}
-            </Typography>
-
-            {textoParaAcaoUm && <Box sx={{mt:4}}>
-                <Button  variant="outlined" size="large" href={linkParaAcao}  sx={{mr:4, color:"#54AD5B", borderRadius:3, width:"200px", }} endIcon={<ArrowForward />}>{textoParaAcaoUm}</Button>
-            </Box>}
-
-        </Box>
-
-        <Box px={5} mt={10} display={{xs: "block", md:"none"}} >
+            <Box px={5} mt={30} display={{xs: "none", md:"block"}} >
 
                 <Box>     
                     <div style={{backgroundColor: "#000", width: "250px", padding:"10px", borderRadius:"10px", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
-                        <Typography variant="body1" sx={{fontWeight:"bold", color:grey[100], mx:1}}>
-                            {subtitulo}
+                        <Typography variant="body1" sx={{fontWeight:"bold", color:grey[100]}}>
+                            {comEfeito ?
+                                <ReactTyped typeSpeed={40} backSpeed={30} strings={[subtitulo]}  startWhenVisible />
+                                :
+                                subtitulo
+                            }
                         </Typography>
                         <Image width={25} height={25} src="/waitIcon.svg" alt="imagem de espera" />
                     </div>
                     
-                    <Box sx={{ mt:1}}>
-                        <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:grey[300]}}>
-                            Torne se um 
+                    <Box sx={{display:"flex", flexDirection:"row", flexWrap: "wrap", mt:1}}>
+                        <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:"#54AD5B", backgroundColor: "#000" }}>
+                           {comEfeito ?
+                            <ReactTyped typeSpeed={40} backSpeed={30} strings={["Torne-se um Padrinho", "Junte-se à Filha Boa"]} loop startWhenVisible />
+                            :
+                            "Filha Boa , uma família"
+                           
+                           }
                         </Typography>
-                        <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold", color:"#54AD5B",my:0}}>
-                            Padrinho 
-                        </Typography>
-
                     </Box>
 
                 </Box>
 
-                <Typography variant="body1" sx={{mt:4, color:grey[400]}}>
+                <Typography variant="body1" sx={{mt:4, color:grey[500], fontWeight: 400}}>    
                     {descricao}
                 </Typography>
 
@@ -91,10 +61,39 @@ export function PequenaDescricaoTextual({titulo, subtitulo,descricao ,textoParaA
                     <Button  variant="outlined" size="large" href={linkParaAcao}  sx={{mr:4, color:"#54AD5B", borderRadius:3, width:"200px", }} endIcon={<ArrowForward />}>{textoParaAcaoUm}</Button>
                 </Box>}
 
-        </Box>
+            </Box>
 
-        
+            <Box px={5} mt={10} display={{xs: "block", md:"none"}} >
 
+                    <Box>     
+                        <div style={{backgroundColor: "#000", width: "250px", padding:"10px", borderRadius:"10px", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+                            <Typography variant="body1" sx={{fontWeight:"bold", color:grey[100], mx:1}}>
+                                {subtitulo}
+                            </Typography>
+                            <Image width={25} height={25} src="/waitIcon.svg" alt="imagem de espera" />
+                        </div>
+                        
+                        <Box sx={{ mt:1}}>
+                            <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold",my:0, color:grey[300]}}>
+                                Torne se um 
+                            </Typography>
+                            <Typography variant="h3"  gutterBottom sx={{fontWeight:"bold", color:"#54AD5B",my:0}}>
+                                Padrinho 
+                            </Typography>
+
+                        </Box>
+
+                    </Box>
+
+                    <Typography variant="body1" sx={{mt:4, color:grey[400]}}>
+                        {descricao}
+                    </Typography>
+
+                    {textoParaAcaoUm && <Box sx={{mt:4}}>
+                        <Button  variant="outlined" size="large" href={linkParaAcao}  sx={{mr:4, color:"#54AD5B", borderRadius:3, width:"200px", }} endIcon={<ArrowForward />}>{textoParaAcaoUm}</Button>
+                    </Box>}
+
+            </Box>
         </> 
     )
 }

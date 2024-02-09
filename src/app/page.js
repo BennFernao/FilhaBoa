@@ -17,64 +17,20 @@ import { buscarDadosJson } from '../../utils/fecths/post';
 import {degrees, PDFDocument, rgb, StandardFonts} from "pdf-lib"
 import { ItensDeAutenticacao } from '@/componentes/navbar/subcomponentes/ItemDeAutenticacao';
 import { BarraDeNavegacao } from '@/componentes/navbar/BarraDeNavegacao';
+import PrimeiroComponente from '@/componentesPageInicial/primeiro';
+import SegundoComponente from '@/componentesPageInicial/segundo';
+import TerceiroComponente from '@/componentesPageInicial/terceiro';
 
+import { Fade } from 'react-reveal';
 
 
 
 export default function App(){
 
-
-
-
   // Definições gerais
     const definicoesGerais = {
       paddingHorizontal : 5,
-      paddingVertical : 15
-
-    }
-
-  // Elementos para o primeiro componente
-
-  const itemsParaOComponenteUm = {
-
-    titulo : "Torne se um Guardião ",
-    descricao : "A importância do apadrinhamento vai além do vinho Ao apadrinhar uma videira, você se torna um guardião  de uma parte significativa da nossa história e cultura  Você está escrevendo seu próprio capítulo nesta história,  contribuindo para o futuro do vinho e para a celebração do legado que ele carrega consigo. ",
-    subtitulo : "Aguardando por você",
-    textoParaAcaoUm : "Apadrinhar",
-    linkParaAcao :"/apadrinhar",
-    aviso : "Ao continuares , você aceita a nossa politica e termos de privacidade",
-    linkParaOAviso : "/politicaDePrivacidade"
-  }
-
-
-  const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm} /> 
-  const Componente2DoGrid1 = <Imagem src={"/img8.jpg"} />
-
-  const Componente2DoGrid2 = <Imagem src={"/img21.jpg"} />
-
-
-  // Elementos para o segundo componente
-
-  const itensDoScreenTituloMaisCards = {
-
-    titulo : "10 anos plantando com amor",
-    dadosDosCards : [{
-          srcImagem : "/img3.jpg",
-          textoParaAcao : "Saber mais",
-          linkParaAcao : "/comoFunciona",
-          titulo : "Plante com responsabilidade" 
-        },{
-          srcImagem : "/img14.jpg",
-          textoParaAcao : "Saber mais",
-          linkParaAcao : "/comoFunciona",
-          titulo : "Seja um participante" 
-        },{
-          srcImagem : "/img13.jpg",
-          textoParaAcao : "Saber mais",
-          linkParaAcao : "/contacto",
-          titulo : "Fale connosco" 
-        }
-      ]
+      paddingVertical : 10
     }
 
 
@@ -142,6 +98,119 @@ const ComponenteDoisScreenQuatro = ()=>(
 
 
 
+const ComponenteUmDoScreenSeis = ()=>{
+
+  const [modalDeCertificadoAberto, setModalDeCertificadoAberto] = React.useState(false)
+  const [nome, setNome] = React.useState("")
+
+
+  function abriModalCertificado(){
+
+    escreverCertificado()
+    setModalDeCertificadoAberto(true)
+  }
+
+
+  function manipularONome(e){
+
+    setNome(e.target.value)
+
+  }
+
+  function escreverCertificado(){
+
+  
+
+    fetch("/cert/api").then((res)=>res.arrayBuffer())
+
+     .then(async (res)=> {
+
+       const exBytes = res 
+       const pdfDoc = await PDFDocument.load(exBytes)
+       const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+     
+       const pages = pdfDoc.getPages()
+       const firstPage = pages[0]
+       const { width, height } = firstPage.getSize()
+       
+       firstPage.drawText(nome, {
+         x: width/2 - 60,
+         y: height / 2 ,
+         
+         size: 20,
+         font: helveticaFont,
+         color: rgb(0.23, 0.4, 0.74),
+         
+         
+       })
+
+       firstPage.drawText('Obrigado por teres apadrinhado as videiras da filhaboa', {
+         x: 170,
+         y: height / 2  - 40,
+         size: 20,
+         font: helveticaFont,
+         color: rgb(0, 0, 0),
+         
+       })
+     
+       const pdfBytes = await pdfDoc.save()
+
+       const pdfData = await pdfDoc.saveAsBase64({dataUri: true})
+       const iframe = document.querySelector("#mypdf")
+
+       console.log("acessado")
+
+       iframe.src = pdfData
+       iframe.style.width = "100%"
+       iframe.style.height = "100%"
+       
+       
+       })
+
+   }
+
+
+
+  return(
+
+    <Grid container item >
+              <Box px={5} mt={20} >
+
+                  <Typography variant="h6" sx={{fontWeight:"bold", color:grey[700]}}>
+                      visualize o seu certificado
+                  </Typography>
+
+                  <Typography variant="h2" color="black.main" gutterBottom sx={{fontWeight:"bold", color: "#226027"}}>
+                      Simule o seu certificado
+                  </Typography>
+
+                  <Typography variant="body1" sx={{mt:4, color:grey[600]}}>
+                      Visualize o seu certificado e motive-se a ver as videiras crescendo por sua causa.
+                  </Typography>
+
+
+                  <Box sx={{mt:4}}>
+                      <TextField id="standard-basic" label="Seu nome" variant="standard" sx={{display:"block"}}  onChange={manipularONome}/>
+                      <Button variant="outlined"  size="large"  sx={{mr:4,mt:4, color:"white"}} endIcon={<ArrowForward />} onClick={abriModalCertificado}>
+                          Visualizar
+                      </Button>
+          
+                  </Box>
+                    
+              </Box>
+
+              <ModalCertificado nome={nome} modalDeCertificadoAberto={modalDeCertificadoAberto} setModalDeCertificadoAberto={setModalDeCertificadoAberto} />
+    </Grid>
+  )
+}
+const ComponenteDoisScreenSeis = ()=>( 
+      <Box mt={10} pr={5}>
+           <Image width={640} height={640}  src="/img17.jpg" style={{objectFit:"cover"}} alt='Vinhas da filha boa' />
+      </Box>
+    )
+
+
+
 const itemsDadosDosPosts = {
   titulo : "Artigos Recentes",
   textoLerMais : "Mais Artigos",
@@ -151,7 +220,7 @@ const itemsDadosDosPosts = {
         titulo: "OS encargos que suportamos",
         srcImagem : "/img5.jpg",
         
-    },        {
+    }, {
         autor: "Filha boa",
         titulo: "OS encargos que suportamos",
         srcImagem : "/img4.jpg",
@@ -168,30 +237,30 @@ const itemsDadosDosPosts = {
 
 const questoesERespostas = [
   {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo nacional tentando"
+    questao: "Quais são os principais desafios ou obstáculos que a filha boa enfrenta atualmente ",
+    resposta : "Atualmente, enfrentamos desafios como [desafios específicos], mas estamos implementando estratégias para superá-los e continuar nosso crescimento sustentável."
   },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo nacional tentando"
+    questao: "Qual é a missão da filha boa",
+    resposta : "Nossa missão é fornecer soluções inovadoras para nossos clientes, promovendo a excelência e a satisfação do cliente"
   },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo multinacional tentando"
+    questao: "Qual é o histórico de crescimento da filha boa nos últimos anos",
+    resposta : "Temos experimentado um crescimento consistente nos últimos anos, com aumentos de [percentual] em receita e uma presença mais forte no mercado."
   },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo multinacional tentando"
+    questao: "Como a filha boa aborda questões de responsabilidade social e sustentabilidade",
+    resposta : "Estamos comprometidos com práticas empresariais éticas, responsabilidade social e sustentabilidade ambiental. Implementamos programas como [exemplos de iniciativas]."
   },
   {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo nacional tentando"
+    questao: "Quais são os planos futuros de expansão ou desenvolvimento da filha boa",
+    resposta : "Estamos focados em expandir nossa presença global, introduzir novos produtos/serviços e investir em pesquisa e desenvolvimento para manter nossa posição de liderança"
   },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo nacional tentando"
-  },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo multinacional tentando"
+    questao: "Como a filha boa lida com a inovação e a tecnologia em seu setor",
+    resposta : "Investimos continuamente em pesquisa e desenvolvimento para estar na vanguarda da inovação. Adotamos tecnologias emergentes, como [exemplos de tecnologias]."
   },  {
     questao: "Como os negócios da Filha boa funciona",
     resposta : "Funcionamos como um grupo multinacional tentando"
+  },  {
+    questao: "Qual é a cultura organizacional da filha boa ",
+    resposta : "Nossa cultura é baseada em [valores da empresa], promovendo um ambiente de trabalho colaborativo, inclusivo e focado no desenvolvimento pessoal e profissional."
   }
 ]
 
@@ -206,18 +275,11 @@ const questoesERespostas = [
           <ItensDeAutenticacao />
         </BarraDeNavegacao>
 
-      {// primeiro elemento
-      }
-      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2, diretion:  "row" }} />
-
-      {// primeiro elemento
-      }
-      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid2} opcoes={{bg:"#0D0D0D", py:2, diretion: "row-reverse"}} />
-
-      {
-        //Segundo elemento
-      }
-      <ScreenTituloMaisCards titulo={itensDoScreenTituloMaisCards.titulo} dadosDosCards={itensDoScreenTituloMaisCards.dadosDosCards}/>
+      <PrimeiroComponente />
+      
+      <Grid container sx={{mt:5}}>  
+          <TerceiroComponente />
+      </Grid>
 
       {// Quarto elemento
       }
@@ -229,12 +291,16 @@ const questoesERespostas = [
 
           <Grid container item xs={12} sx={{display:"flex", flexDirection:"row"}} px={definicoesGerais.paddingHorizontal}>
               <Grid item xs={12} md={6} p={2}>
-                  <ScreenComDoisComponentes ComponenteDois={<ComponenteUmDoScreenQuatro {...itemsParaOComponenteQuatro}  />} ComponenteUm={<ComponenteDoisScreenQuatro />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
+                  <Fade>
+                    <ScreenComDoisComponentes ComponenteDois={<ComponenteUmDoScreenQuatro {...itemsParaOComponenteQuatro}  />} ComponenteUm={<ComponenteDoisScreenQuatro />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
+                  </Fade>
               </Grid>
 
 
               <Grid item xs={12} md={6} p={2}>
-                  <ScreenComDoisComponentes  ComponenteDois={<ComponenteUmDoScreenQuatro {...itemsParaOComponenteQuatro}  />} ComponenteUm={<ComponenteDoisScreenCinco />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
+                  <Fade>
+                    <ScreenComDoisComponentes  ComponenteDois={<ComponenteUmDoScreenQuatro {...itemsParaOComponenteQuatro}  />} ComponenteUm={<ComponenteDoisScreenCinco />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
+                  </Fade>
               </Grid>
           </Grid>
 
@@ -253,20 +319,29 @@ const questoesERespostas = [
           </Grid>
 
           <Grid container item >
-              <PlanoDeApadrinhamento />
-              <PlanoDeApadrinhamento />
-              <PlanoDeApadrinhamento />
+              
+                <PlanoDeApadrinhamento nomeDoPlano="Básico" valorPresente={50} valorAnterior={70} mensalidade={3}  />
+                <PlanoDeApadrinhamento nomeDoPlano="Max" valorPresente={75} valorAnterior={90} mensalidade={3}  />
+                <PlanoDeApadrinhamento nomeDoPlano="Premium" valorPresente={85} valorAnterior={95} mensalidade={3}  />
+              
           </Grid>
 
 
       </Grid>
+
+
+      {
+        //Terceiro elemento, Simulador de certificado
+      }
+
+      <ScreenComDoisComponentes ComponenteDois={<ComponenteUmDoScreenSeis />} ComponenteUm={<ComponenteDoisScreenSeis />}  {...definicoesGerais}/>
 
         {
         // Quinto
         }
 
         <Grid container item sx={{backgroundColor : "#f7f7f7"}}>  
-          <ScreenTituloMaisCardsDois  {...itemsDadosDosPosts}/>
+          <ScreenTituloMaisCardsDois  {...itemsDadosDosPosts} />
         </Grid>
 
 
@@ -279,12 +354,12 @@ const questoesERespostas = [
           <Typography variant='h3' sx={{fontWeight:"bold", mb:10, color: "#226027"}}>Perguntas Frequentes</Typography>
 
           <Grid container  xs={12}  > 
-          {questoesERespostas.map((qr, pos)=>(
+            {questoesERespostas.map((qr, pos)=>(
 
-              <Grid  xs={12} md={6} sx={{px:2, my:2}}>  
-                <PerguntaEResposta  questao={qr.questao} resposta={qr.resposta} />
-              </Grid>
-          ))}
+                <Grid  xs={12} md={6} sx={{px:2, my:2}}>  
+                  <PerguntaEResposta  questao={qr.questao} resposta={qr.resposta} />
+                </Grid>
+            ))}
           </Grid>
         </Grid>
 
@@ -318,7 +393,6 @@ export function Imagem({src}){
 
 export function ContainerParaDoisComponentes({Componente1, Componente2, opcoes}){
 
-  
   return(
 
     <Grid container item xs={12} sx={{ display:"flex", flexDirection: opcoes.diretion, flexWrap: "wrap", justifyContent: "space-between", bgcolor: opcoes.bg ? opcoes.bg : "inherit", py: opcoes.py ? opcoes.py : 2}} >

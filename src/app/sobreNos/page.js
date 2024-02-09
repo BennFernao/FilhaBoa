@@ -2,16 +2,15 @@
 import * as React from 'react';
 import { BarraDeNavegacao } from "@/componentes/navbar/BarraDeNavegacao";
 import { Grid, Box, Typography, Divider, Button } from "@mui/material";
-import {  ThemeProvider, createTheme } from '@mui/material';
+
 import { green, deepOrange, grey } from '@mui/material/colors';
 import Image from 'next/image';
-import { Imagem, ContainerParaDoisComponentes } from '../page';
 
 import { ScreenComDoisComponentes, PequenaDescricaoTextual, PequenaDescricaoTextualMenor } from '@/componentes/screens/screenComDoisComponentes';
-import { ScreenTituloMaisCards, ScreenTituloMaisCardsDois } from '@/componentes/screens/screenTituloMaisCards';
 import { Footer } from '@/componentes/footers/footer1';
+import PlanoDeApadrinhamento from '@/componentes/apresentacaoDeCards/apresentacao1';
+import { ContainerParaDoisComponentes, Imagem } from '../page';
 import { ItensDeAutenticacao } from '@/componentes/navbar/subcomponentes/ItemDeAutenticacao';
-
 
 
 
@@ -19,26 +18,28 @@ export default function Home() {
 
   // Definições gerais
 
+
+  // Dados para o primeiro componente
+
+  // Definições gerais
   const definicoesGerais = {
     paddingHorizontal : 5,
     paddingVertical : 15
   }
 
-  // Dados para o primeiro componente
+// Elementos para o primeiro componente
 
-  const itemsParaOComponenteUm ={
+const itemsParaOComponenteUm = {
 
-    titulo : "Há um tempo atrás começamos a impactar o mundo",
-    descricao : "A importância do apadrinhamento vai além do vinho. Ao apadrinhar uma videira, você se torna um guardião de uma parte significativa da nossa história e cultura. Você está escrevendo seu próprio capítulo nesta história, contribuindo para o futuro do vinho e para a celebração do legado que ele carrega consigo",
-    subtitulo : "Junte-se a nós ",
-  }
+  titulo : "Funcionamos como representamos ",
+  descricao : "A importância do apadrinhamento vai além do vinho Ao apadrinhar uma videira, você se torna um guardião  de uma parte significativa da nossa história e cultura  Você está escrevendo seu próprio capítulo nesta história,  contribuindo para o futuro do vinho e para a celebração do legado que ele carrega consigo. ",
+  subtitulo : "Aguardando por você",
 
-  const componenteUmDoScreenUm = <PequenaDescricaoTextual {...itemsParaOComponenteUm} />
-  const ComponenteDoisScreenUm = ()=>( 
-    <Box mt={10} >
-         <Image width={640} height={640}  src="/img8.jpg" style={{objectFit:"cover"}} />
-    </Box>
-  )
+  aviso : "Ao continuares , você aceita a nossa politica e termos de privacidade",
+  linkParaOAviso : "/politicaDePrivacidade"
+}
+const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm}  comEfeito={false}/> 
+const Componente2DoGrid1 = <Imagem src={"/img21.jpg"} />
 
     // Dados para o Segundo componente
 
@@ -47,15 +48,12 @@ const itensDoScreenTituloMaisCards = {
   titulo : "10 anos plantando com amor",
   dadosDosCards : [{
         srcImagem : "/img3.jpg",
-      
         titulo : "Plante com responsabilidade" 
       },{
-        srcImagem : "/img3.jpg",
- 
+        srcImagem : "/img10.jpg", 
         titulo : "Seja um participante" 
       },{
         srcImagem : "/img3.jpg",
-       
         titulo : "Festeje connosco" 
       }
     ]
@@ -67,6 +65,7 @@ const itensDoScreenTituloMaisCards = {
       titulo : "Cultive Memórias Duradouras",
       descricao : "Você estará cultivando memórias que durarão uma vida inteira. Ao segurar uma taça do vinho produzido por suas videiras, você sentirá uma conexão profunda com a terra, o tempo e a tradição. Cada gole será uma celebração não apenas do vinho, mas do seu papel na criação dele.",
       subtitulo : "O apadrinhamento de videiras transcende os limites do presente"
+
     }
   
     const componenteUmDoScreenTres = <PequenaDescricaoTextual {...itemsParaOComponenteTres} />
@@ -75,6 +74,8 @@ const itensDoScreenTituloMaisCards = {
            <Image width={640} height={640}  src="/img7.jpg" style={{objectFit:"cover"}} alt='Vinhas da filha boa' />
       </Box>
     )
+
+
 
 
 // Dados para o Quarto Componente
@@ -89,16 +90,43 @@ const itemsParaOComponenteQuinto ={
   descricao: "Ao apadrinhar uma videira, você não está apenas investindo em uvas; você está investindo em uma experiência completa. Você terá o privilégio de acompanhar de perto a evolução de suas videiras ao longo das estações ",
   titulo : "Do Vinhedo à Experiência ",
   subtitulo: "Connosco plantas melhor" 
+ 
 }
 
-const componenteUmDoScreenCinco = <PequenaDescricaoTextualMenor {...itemsParaOComponenteQuinto} />
+const ComponenteUmDoScreenQuatro = ({titulo, subtitulo,descricao, textoParaAcaoUm, linkParaAcao})=>{
+  return(
+
+    <Box >
+
+        <Typography variant="body1" sx={{mt:2,fontWeight:"bold", color:grey[700]}}>
+            {subtitulo}
+        </Typography>
+
+        <Typography variant="h4" color={grey["900"]} gutterBottom sx={{fontWeight:"bold"}}>
+            {titulo}
+        </Typography>
+
+        <Typography variant="body1" sx={{mt:4, color:grey[700]}}>
+            {descricao}
+        </Typography>
+
+        {textoParaAcaoUm && 
+        <Box sx={{mt:4}}>
+            <Button variant="outlined"  size="large" href={linkParaAcao}  sx={{mr:4, color:"white"}} endIcon={<ArrowForward />}>{textoParaAcaoUm}</Button>
+          
+        </Box>
+        }
+
+    </Box>
+
+  )
+}
 const ComponenteDoisScreenCinco = ()=>( 
   <Box >
        <Image width={640} height={450} style={{maxWidth:"100%", objectFit:"cover"}} src="/img3.jpg" />
   </Box>
 )
 
-const componenteUmDoScreenQuatro = <PequenaDescricaoTextualMenor {...itemsParaOComponenteQuatro} />
 const ComponenteDoisScreenQuatro = ()=>( 
   <Box >
        <Image width={640} height={450} src="/img3.jpg" style={{maxWidth:"100%", objectFit:"cover"}} />
@@ -106,58 +134,98 @@ const ComponenteDoisScreenQuatro = ()=>(
 )
 
 
-const dadosParaOHeader = {
-  titulo :"Sobre Nós",
-  descricao: "Saiba mais sobre  nós"
-}
-
-
-const Componente1DoGrid1 = <PequenaDescricaoTextual {...itemsParaOComponenteUm} /> 
-const Componente2DoGrid1 = <Imagem src={"/img8.jpg"} />
 
 
 
 
-
-  
+ 
 
   return (
 
+   
+      
+      
 
-      <Grid container  py={6}>
-        <BarraDeNavegacao>
+      <Grid container >
+
+      <BarraDeNavegacao>
           <ItensDeAutenticacao />
-        </BarraDeNavegacao>
-        {// Segundo elemento
+       </BarraDeNavegacao>
+      {// primeiro elemento
+      }
+      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0d0d0d", py :2}} />
+
+
+      {// primeiro elemento
+      }
+      <ContainerParaDoisComponentes Componente1={Componente2DoGrid1} Componente2={Componente1DoGrid1} opcoes={{bg:"#0d0d0d", py:2}} />
+
+
+        {// Quarto elemento
         }
-        <ScreenTituloMaisCards titulo={itensDoScreenTituloMaisCards.titulo} dadosDosCards={itensDoScreenTituloMaisCards.dadosDosCards}/>
+              <Grid item>
 
-      {// primeiro elemento
-      }
-      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+                <Box px={definicoesGerais.paddingHorizontal} mt={5}>
+                  <Typography variant='h3' sx={{fontWeight:"bold", mb:2, color:"#226027"}}>Juntos podemos melhorar o mundo</Typography>
+                </Box>
 
-      {// primeiro elemento
-      }
-      <ContainerParaDoisComponentes Componente1={Componente2DoGrid1} Componente2={Componente1DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
-
-      {// primeiro elemento
-      }
-      <ContainerParaDoisComponentes Componente1={Componente1DoGrid1} Componente2={Componente2DoGrid1} opcoes={{bg:"#0D0D0D", py:2}} />
+                <Grid container item xs={12} sx={{display:"flex", flexDirection:"row"}} px={definicoesGerais.paddingHorizontal}>
+                    <Grid item xs={12} md={6} p={2}>
+                        <ScreenComDoisComponentes ComponenteDois={<ComponenteUmDoScreenQuatro {...itemsParaOComponenteQuatro}  />} ComponenteUm={<ComponenteDoisScreenQuatro />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
+                    </Grid>
 
 
+                    <Grid item xs={12} md={6} p={2}>
+                        <ScreenComDoisComponentes  ComponenteDois={<ComponenteUmDoScreenQuatro {...itemsParaOComponenteQuatro}  />} ComponenteUm={<ComponenteDoisScreenCinco />}  {...definicoesGerais} paddingVertical={10} bgColor="white"/>
+                    </Grid>
+                </Grid>
+
+              </Grid>
 
 
-      {
-        // Footer
+        {
+          //Quarto
         }
+
+
+
+      <Grid  container item px={definicoesGerais.paddingHorizontal} py={8} sx={{ backgroundColor:"#000000", flexDirection:"column"}}>
+          <Grid item>
+
+            <Typography variant="h3" sx={{fontWeight:"bold", mb:4, color:"#54ad5b" }} >
+                Conheça os nossos planos 
+            </Typography>
+
+          </Grid>
+
+          <Grid container item >
+              <PlanoDeApadrinhamento />
+              <PlanoDeApadrinhamento />
+              <PlanoDeApadrinhamento />
+
+          </Grid>
+
+
+      </Grid>
+
+
+
+
+
+
         <Grid container item px={definicoesGerais.paddingHorizontal} py={definicoesGerais.paddingVertical} sx={{ backgroundColor:"#000000"}}>
           <Footer />
           <Divider sx={{color: grey[100], backgroundColor: grey[500]}} />
         </Grid>
+
           
           
 
         </Grid>
+
+
+ 
+
 
   )
 }

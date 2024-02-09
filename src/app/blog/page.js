@@ -140,32 +140,10 @@ const itemsDadosDosPosts = {
 
 }
 
-const dadosParaOHeader = {
-  titulo :"BLOG",
-  descricao: " Acompanhe as principais noticias sobre a filha boa aqui"
-}
 
 
-// Dados para o Quinto Componente
-
-const questoesERespostas = [
-  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo nacional tentando"
-  },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo nacional tentando"
-  },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo multinacional tentando"
-  },  {
-    questao: "Como os negócios da Filha boa funciona",
-    resposta : "Funcionamos como um grupo multinacional tentando"
-  }
-]
 
 
-  
 
   return (
      <Grid container >
@@ -176,8 +154,8 @@ const questoesERespostas = [
         {// Quinto
         }
 
-        <Grid container item sx={{backgroundColor : "#f7f7f7"}}>  
-            <ScreenTituloMaisCardsDois  {...itemsDadosDosPosts}/>
+        <Grid  item xs={12} sx={{backgroundColor : "#f7f7f7"}}>  
+            <ScreenTituloMaisCardsDois  {...itemsDadosDosPosts} pagina={true}/>
         </Grid>
 
         <Grid container item px={definicoesGerais.paddingHorizontal} py={definicoesGerais.paddingVertical} sx={{ backgroundColor:"#000000"}}>

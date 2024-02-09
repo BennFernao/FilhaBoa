@@ -8,6 +8,7 @@ const fatiaDeSessoes = createSlice({
         sessaoAtivada : 1,
         estadosDasVideirasDasSessoes :[[],[],[],[],[],[],[],[], [],[]],
         videirasSelecionadas : [],
+        planosDasVideirasSelecionadas : [],
         planosExistentes: []
     
     }, 
@@ -61,10 +62,17 @@ const fatiaDeSessoes = createSlice({
 
             state.estadosDasVideirasDasSessoes[state.sessaoAtivada - 1] = action.payload.estadosDasVideiras
             
+        },
+
+        definirPlanoDaVideiraSelecionada : (state, action)=>{
+
+            const posicaoDaVideira = action.payload.posicaoDaVideira
+            state.planosDasVideirasSelecionadas[posicaoDaVideira] = action.payload.idPlanoSelecionado
+
         }
     }
 })
 
 
 export default fatiaDeSessoes.reducer
-export const {deletarVideiraSelecionada, inserirPlanos, inserirVideiraSelecionada,inserirEstadosDeVideirasDeUmaSecao, alterarSessaoAtiva, mapearUmaSessao} = fatiaDeSessoes.actions
+export const {deletarVideiraSelecionada,definirPlanoDaVideiraSelecionada, inserirPlanos, inserirVideiraSelecionada,inserirEstadosDeVideirasDeUmaSecao, alterarSessaoAtiva, mapearUmaSessao} = fatiaDeSessoes.actions
